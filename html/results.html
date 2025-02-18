@@ -8,13 +8,17 @@
 </head>
 <body>
     <div class="results">
-        <h1 id="title">TeachAssist Marks</h1>
-        <div class="grade-container">
-            <div class="course" id="course-list"></div>
-            <div class="grade" id="grade-list"></div>
+        <div class="grades">
+            <h1 id="title">TeachAssist</h1>
+            <div class = "grade-container">
+                <div class="course" id="course-list"></div>
+                <div class="grade" id="grade-list"></div>
+            </div>
+        </div>
+        <div class="announcements">
+            <h1 id="title">Today's Announcement</h1>
         </div>
     </div>
-
     <script>
         async function fetchResults() {
             try {
@@ -49,8 +53,8 @@
                 let gradeList = "";
 
                 data.grades.forEach(grade => {
-                    courseList += `<h1>${grade.course}</h1>`;
-                    gradeList += `<h1>${grade.current}</h1>`;
+                    courseList += `<h1 id="subheading">${grade.course}</h1>`;
+                    gradeList += `<h1 id="subheading">${grade.current}</h1>`;
                 });
 
                 document.getElementById("course-list").innerHTML = courseList;

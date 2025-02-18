@@ -29,8 +29,8 @@ body {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 800px;
-    height: 800px;
+    width: 600px;
+    height: 540px;
     flex: 1;
 }
 
@@ -39,8 +39,8 @@ body {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 800px;
-    height: 800px;
+    width: 600px;
+    height: 540px;
     flex: 1;
 }
 
@@ -67,4 +67,8 @@ body {
 .grade {
     flex: 1;
     text-align: center;
+}
+
+#subheading {
+    margin-bottom: 5px;
 }
