@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(248, 205, 215, 0.5) 10%, transparent 50%), 
+                radial-gradient(circle at 70% 30%, rgba(248, 234, 196, 0.5) 10%, transparent 50%), 
+                radial-gradient(circle at 50% 80%, rgba(235, 181, 161, 0.5) 10%, transparent 50%);
+    filter: blur(0px);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto;
+}
+
+.results {
+    padding: 30px;
+    border-radius: 8px;
+    display: flex; /* Enables flexbox */
+    gap: 30px; /* Adds space between the items */
+}
+
+.grades {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    height: 800px;
+    flex: 1;
+}
+
+.announcements {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    height: 800px;
+    flex: 1;
+}
+
+#title {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.grade-container {
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    display: flex; /* Enables flexbox */
+    gap: 40px; /* Adds space between the items */
+}
+
+.course {
+    flex: 1;
+    text-align: center;
+}
+
+.grade {
+    flex: 1;
+    text-align: center;
+}
