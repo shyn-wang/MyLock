@@ -3,24 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyLock</title>
-    <link rel="stylesheet" href="/css/landingPage.css">
+    <title>Student Marks</title>
+    <script>
+        async function fetchMarks() {
+            try {
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+
+                if (!username || !password) {
+                    alert("Please enter both username and password.");
+                    return;
+                }
+
+                const response = await fetch("http://127.0.0.1:5000/get_marks", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Received Data:", data);
+
+                if (data.error) {
+                    document.body.innerHTML = `<h1>Error: ${data.error}</h1>`;
+                    return;
+                }
+
+                let table = "<tr><th>Course</th><th>Midterm</th><th>Current</th></tr>";
+                data.grades.forEach(mark => {
+                    table += `<tr><td>${mark.course}</td><td>${mark.midterm}</td><td>${mark.current}</td></tr>`;
+                });
+
+                document.getElementById("marksTable").innerHTML = table;
+
+            } catch (error) {
+                console.error("Error fetching marks:", error);
+                document.body.innerHTML = `<h1>Failed to load data. Check console.</h1>`;
+            }
+        }
+
+        async function loadMarks() {
+            const response = await fetch("http://127.0.0.1:5000/marks");
+            const marks = await response.json();
+
+            let table = "<tr><th>Course</th><th>Midterm</th><th>Current</th></tr>";
+            marks.forEach(mark => {
+                table += `<tr><td>${mark.course}</td><td>${mark.midterm}</td><td>${mark.current}</td></tr>`;
+            });
+
+            document.getElementById("marksTable").innerHTML = table;
+        }
+    </script>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-text">MyLock</span>
-            </div>
-            <div class="nav-links">
-                <button class="get-started-button" onclick="window.location.href='/html/login.html'"">Log In</button>
-            </div>
-        </div>
-    </nav>
-    <section class="hero">
-        <h1>MyLock: The All-in-One<br>Student Assistant</h1>
-        <button class="primary-button" onclick="window.location.href='/html/login.html'">Get Started</button>
+    <h1>Check Student Marks</h1>
+    <label>Username:</label>
+    <input type="text" id="username" required>
+    <label>Password:</label>
+    <input type="password" id="password" required>
+    <button onclick="fetchMarks()">Fetch Marks</button>
 
-    </section>
+    <h2>Marks:</h2>
+    <table border="1" id="marksTable">
+        <tr><th>Course</th><th>Midterm</th><th>Current</th></tr>
+    </table>
 </body>
 </html>
