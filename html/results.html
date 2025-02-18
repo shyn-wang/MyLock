@@ -4,25 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/resultsPage.css">
-    <title>login</title>
+    <title>Results</title>
 </head>
 <body>
     <div class="results">
         <div class="grades">
             <h1 id="title">TeachAssist</h1>
             <div class = "grade-container">
-                <div class = "course">
-                    <h1 id = "subheading">History</h1>
-                    <h1 id = "subheading">English</h1>
-                    <h1 id = "subheading">Physics</h1>
-                    <h1 id = "subheading">Functions</h1>
-                </div>
-                <div class = "grade">
-                    <h1 id = "subheading">100.0%</h1>
-                    <h1 id = "subheading">100.0%</h1>
-                    <h1 id = "subheading">100.0%</h1>
-                    <h1 id = "subheading">100.0%</h1>
-                </div>
+                <div class="course" id="course-list"></div>
+                <div class="grade" id="grade-list"></div>
             </div>
             <h1 id = "average">Average: 100.0%</h1>
         </div>
@@ -30,5 +20,54 @@
             <h1 id="title">Today's Announcement</h1>
         </div>
     </div>
+    <script>
+        async function fetchResults() {
+            try {
+                const username = localStorage.getItem("username");
+                const password = localStorage.getItem("password");
+
+                if (!username || !password) {
+                    alert("No login details found. Redirecting...");
+                    window.location.href = "login.html";
+                    return;
+                }
+
+                const response = await fetch("http://127.0.0.1:5000/get_marks", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Received Data:", data);
+
+                if (data.error) {
+                    document.body.innerHTML = `<h1>Error: ${data.error}</h1>`;
+                    return;
+                }
+
+                let courseList = "";
+                let gradeList = "";
+
+                data.grades.forEach(grade => {
+                    courseList += `<h1 id="subheading">${grade.course}</h1>`;
+                    gradeList += `<h1 id="subheading">${grade.current}</h1>`;
+                });
+
+                document.getElementById("course-list").innerHTML = courseList;
+                document.getElementById("grade-list").innerHTML = gradeList;
+
+            } catch (error) {
+                console.error("Error fetching marks:", error);
+                document.body.innerHTML = `<h1>Failed to load data. Check console.</h1>`;
+            }
+        }
+
+        fetchResults();
+    </script>
 </body>
 </html>
